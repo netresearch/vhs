@@ -310,7 +310,9 @@ class Tx_Vhs_Service_AssetService implements \TYPO3\CMS\Core\SingletonInterface 
 				// Put a return carriage between assets preventing broken content.
 				$source .= "\n";
 			}
-			file_put_contents($fileAbsolutePathAndFilename, $source);
+			if (md5_file($fileAbsolutePathAndFilename) != md5($source)) {
+				file_put_contents($fileAbsolutePathAndFilename, $source);
+			}
 		}
 		if (FALSE === empty($GLOBALS['TYPO3_CONF_VARS']['FE']['versionNumberInFilename'])) {
 			$timestampMode = $GLOBALS['TYPO3_CONF_VARS']['FE']['versionNumberInFilename'];
